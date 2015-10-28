@@ -25,11 +25,8 @@ public class GameofThronesI {
             Map<Character, Boolean> letterMap = new HashMap<>();
             for (int i = 0; i < input.length(); i++) {
                 char currentChar = input.charAt(i);
-                if (letterMap.containsKey(currentChar)) {
-                    letterMap.put(currentChar, !letterMap.get(currentChar));
-                } else {
-                    letterMap.put(currentChar, false);
-                }
+                letterMap.computeIfPresent(currentChar, (k, v) -> !v);
+                letterMap.computeIfAbsent(currentChar, k -> false);
             }
             if (letterMap.values().stream().filter(b -> b == false).count() > 1) {
                 return false;
